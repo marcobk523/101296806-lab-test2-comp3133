@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SpaceXService } from '../space-x.service';
 import { Launch } from '../launch';
 import { Location } from '@angular/common';
+import { FilterResetService } from '../services/filter-reset.service'; // Adjust the path as necessary
 
 @Component({
   selector: 'app-missionlist',
@@ -21,7 +22,8 @@ export class MissionlistComponent implements OnInit {
     private spaceXService: SpaceXService, 
     private breakpointObserver: BreakpointObserver, 
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private filterResetService: FilterResetService
     ) { }
 
   // ngOnInit(): void {
@@ -66,6 +68,7 @@ export class MissionlistComponent implements OnInit {
   }
 
   goBack() {
+    this.filterResetService.callReset();
     this.router.navigate(['/missions']);
   }
 }

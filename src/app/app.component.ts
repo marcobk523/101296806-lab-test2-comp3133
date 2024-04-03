@@ -9,7 +9,9 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
+
   title = '101296806-lab-test2-comp3133';
   filteredLaunches: Launch[] = [];
 
