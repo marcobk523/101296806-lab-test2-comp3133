@@ -1,0 +1,8 @@
+<div class="filter-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Filter by Year</mat-label>
+      <mat-select (selectionChange)="filterLaunches($event)">
+        <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
