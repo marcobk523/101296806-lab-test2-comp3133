@@ -1,20 +1,30 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SpaceXService } from '../space-x.service';
-import { Launch } from '../launch';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-missiondetails',
   templateUrl: './missiondetails.component.html',
   styleUrls: ['./missiondetails.component.css']
 })
-export class MissiondetailsComponent implements OnChanges {
-  @Input() flightNumber?: string;
-  launchDetails: Launch | null = null;
+export class MissiondetailsComponent implements OnInit {
+  flightNumber?: string;
+  launchDetails: any;
 
-  constructor(private spaceXService: SpaceXService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private spaceXService: SpaceXService,
+    private location: Location
+  ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['flightNumber'] && this.flightNumber) {
+  goBack() {
+    this.location.back();
+  }
+
+  ngOnInit(): void {
+    this.flightNumber = this.route.snapshot.paramMap.get('flight_Number') ?? '';
+    if (this.flightNumber) {
       this.spaceXService.getLaunchDetails(this.flightNumber).subscribe(details => {
         this.launchDetails = details;
       });

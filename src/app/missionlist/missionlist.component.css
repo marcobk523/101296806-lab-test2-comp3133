@@ -1,0 +1,21 @@
+mat-card {
+    display: flex;
+    flex-direction: column;
+}
+  
+mat-card-header {
+    align-self: center;
+    margin-bottom: 15px;
+}
+  
+img.mat-card-image {
+    object-fit: contain;
+    max-height: 200px; /* Adjust based on your preference */
+    width: auto;
+    margin: 0 auto;
+}
+  
+mat-card-actions {
+    margin-top: auto;
+    justify-content: center;
+}

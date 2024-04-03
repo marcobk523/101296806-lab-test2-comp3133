@@ -1,5 +1,15 @@
-<div *ngFor="let launch of launches" (click)="goToDetail(launch.flight_number)">
-    <h3>{{ launch.mission_name }}</h3>
-    <p>Year: {{ launch.launch_year }}</p>
-    <img [src]="launch.links.mission_patch_small" alt="Mission Patch">
-</div>
+<mat-grid-list [cols]="getGridCols()" rowHeight="350px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let launch of launches">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ launch.mission_name }}</mat-card-title>
+          <mat-card-subtitle>Year: {{ launch.launch_year }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="launch.links.mission_patch_small" alt="Mission Patch" style="width: 100%; height: auto; max-height: 200px; object-fit: contain;">
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/details', launch.flight_number]">VIEW DETAILS</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+<button (click)="goBack()">Back to All Launches</button>

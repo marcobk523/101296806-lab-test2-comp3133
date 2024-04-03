@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { SpaceXService } from '../space-x.service';
 import { Launch } from '../launch';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-missionfilter',
@@ -12,14 +13,18 @@ import { Launch } from '../launch';
 export class MissionfilterComponent implements OnInit {
 
   years: number[] = this.generateYearsArray();
-  @Output() yearSelected: EventEmitter<string> = new EventEmitter();
+  @Output() yearSelected = new EventEmitter<string>();
 
-  filteredLaunches: Launch[] = []; // Holds the filtered launches
+  filteredLaunches: Launch[] = [];
 
-  constructor(private spaceXService: SpaceXService) {}
+  constructor(private spaceXService: SpaceXService, private router: Router) {}
 
   ngOnInit(): void {
-    this.populateYears();
+    this.years = this.generateYearsArray(); // Ensure this method correctly populates the array
+}
+
+  onYearSelect(year: string): void {
+    this.yearSelected.emit(year);
   }
 
   populateYears() {
@@ -31,10 +36,9 @@ export class MissionfilterComponent implements OnInit {
 
   filterLaunches(event: MatSelectChange) {
     const selectedYear = event.value;
-    this.spaceXService.getLaunchesByYear(selectedYear).subscribe((launches: Launch[]) => {
-      this.filteredLaunches = launches;
-    });
-    this.yearSelected.emit(event.value); // Emit the selected year
+    console.log("Filter launches called with event:", event);
+    console.log("Emitting year:", event.value); // Debug log
+    this.router.navigate(['/missions'], { queryParams: { year: selectedYear } });
   }
 
   private generateYearsArray(): number[] {
